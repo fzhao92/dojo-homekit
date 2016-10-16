@@ -25,6 +25,10 @@ class XMCLightbulbViewController: UIViewController, HMAccessoryDelegate {
     var saturationValue: Float = 0.0
     var accessory: HMAccessory?
     var lightBulbService: HMService?
+    var state: HMCharacteristic?
+    var hue: HMCharacteristic?
+    var brightness: HMCharacteristic?
+    var saturation: HMCharacteristic?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +38,61 @@ class XMCLightbulbViewController: UIViewController, HMAccessoryDelegate {
             }
         }
         accessory?.delegate = self
+        initCharacteristics()
+        checkInitialLightState()
+        print("Current brightness is \(brightness?.value as! Float)")
+
     }
     
     @IBAction func lightSwitchTapped(_ sender: UISwitch) {
-        
+        let toggleState = (state?.value as! Bool) ? false : true
+        state?.writeValue(NSNumber(value: toggleState ), completionHandler: { (error) -> Void in
+            if error != nil {
+                print("Error during attempt to update service")
+            }
+            else {
+                self.checkLightState()
+            }
+        })
+    }
+    
+    func checkInitialLightState() {
+        if state?.value as! Bool == true {
+            lightBulbColor.backgroundColor = UIColor.red.withAlphaComponent(1.0)
+            lightSwitch.isOn = true
+        }
+        else{
+            lightBulbColor.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+            lightSwitch.isOn = false
+        }
+    }
+    
+    func checkLightState() {
+        if state?.value as! Bool == true {
+            lightBulbColor.backgroundColor = UIColor.red.withAlphaComponent(1.0)
+        }
+        else{
+            lightBulbColor.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+        }
+    }
+    
+    func initCharacteristics() {
+        for item in (lightBulbService?.characteristics)! {
+            let characteristic = item as HMCharacteristic
+            if let metadata = characteristic.metadata as HMCharacteristicMetadata?{
+                switch metadata.manufacturerDescription! {
+                case "Power State":
+                    state = characteristic
+                case "Hue":
+                    hue = characteristic
+                case "Saturation":
+                    saturation = characteristic
+                case "Brightness":
+                    brightness = characteristic
+                default:
+                    break
+                }
+            }
+        }
     }
 }
