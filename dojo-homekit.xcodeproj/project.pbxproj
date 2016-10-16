@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F71DFC21DB3F211007B3583 /* XMCLightbulbViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F71DFC11DB3F211007B3583 /* XMCLightbulbViewController.swift */; };
 		F019C8481A8C24E700E2BC5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F019C8471A8C24E700E2BC5E /* AppDelegate.swift */; };
 		F019C84A1A8C24E700E2BC5E /* XMCBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F019C8491A8C24E700E2BC5E /* XMCBaseViewController.swift */; };
 		F019C84D1A8C24E700E2BC5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F019C84B1A8C24E700E2BC5E /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F71DFC11DB3F211007B3583 /* XMCLightbulbViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMCLightbulbViewController.swift; sourceTree = "<group>"; };
 		F019C8421A8C24E700E2BC5E /* dojo-homekit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "dojo-homekit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F019C8461A8C24E700E2BC5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F019C8471A8C24E700E2BC5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				F019C8491A8C24E700E2BC5E /* XMCBaseViewController.swift */,
 				F019C86A1A8C2C2900E2BC5E /* XMCDiscoveryViewController.swift */,
 				F0261E681A8C4776004DD33A /* XMCAccessoryViewController.swift */,
+				3F71DFC11DB3F211007B3583 /* XMCLightbulbViewController.swift */,
 				F019C84B1A8C24E700E2BC5E /* Main.storyboard */,
 				F019C84E1A8C24E700E2BC5E /* Images.xcassets */,
 				F0261E6A1A8C74B5004DD33A /* LaunchScreen_rank_3.xib */,
@@ -112,12 +115,13 @@
 			attributes = {
 				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "David McGraw";
 				TargetAttributes = {
 					F019C8411A8C24E700E2BC5E = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = TS6V23BE8W;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.HomeKit = {
 								enabled = 1;
@@ -166,6 +170,7 @@
 				F019C84A1A8C24E700E2BC5E /* XMCBaseViewController.swift in Sources */,
 				F019C8481A8C24E700E2BC5E /* AppDelegate.swift in Sources */,
 				F019C86B1A8C2C2900E2BC5E /* XMCDiscoveryViewController.swift in Sources */,
+				3F71DFC21DB3F211007B3583 /* XMCLightbulbViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,8 +201,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -206,6 +213,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -239,8 +247,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -248,6 +258,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -257,6 +268,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -273,6 +285,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.igotit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -288,6 +301,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.igotit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

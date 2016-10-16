@@ -23,39 +23,45 @@ class XMCBaseViewController: UITableViewController, HMHomeManagerDelegate {
         homeManager.delegate = self
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.reloadData()
     }
     
-    func updateControllerWithHome(home: HMHome) {
+    func updateControllerWithHome(_ home: HMHome) {
         if let room = home.rooms.first as HMRoom? {
             activeRoom = room
             title = room.name + " Devices"
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showServicesSegue" {
-            let vc = segue.destinationViewController as! XMCAccessoryViewController
+            let vc = segue.destination as! XMCAccessoryViewController
             if let accessories = activeRoom?.accessories {
                 vc.accessory = accessories[lastSelectedIndexRow] as HMAccessory?
+            }
+        }
+        else if segue.identifier == "showLightbulb" {
+            let dest = segue.destination as! XMCLightbulbViewController
+            if let accessories = activeRoom?.accessories {
+                dest.accessory = accessories[lastSelectedIndexRow] as HMAccessory?
             }
         }
     }
     
     // MARK: - Table Delegate
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let accessories = activeRoom?.accessories {
             return accessories.count
         }
         return 0
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("deviceId") as UITableViewCell?
-        let accessory = activeRoom!.accessories[indexPath.row] as HMAccessory
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "deviceId") as UITableViewCell?
+        let accessory = activeRoom!.accessories[(indexPath as NSIndexPath).row] as HMAccessory
         cell?.textLabel?.text = accessory.name
         
         // ignore the information service
@@ -64,22 +70,22 @@ class XMCBaseViewController: UITableViewController, HMHomeManagerDelegate {
         return (cell != nil) ? cell! : UITableViewCell()
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        lastSelectedIndexRow = indexPath.row
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        lastSelectedIndexRow = (indexPath as NSIndexPath).row
     }
     
     // MARK: - Home Delegate
     
     // Homes are not loaded right away. Monitor the delegate so we catch the loaded signal.
-    func homeManager(manager: HMHomeManager, didAddHome home: HMHome) {
+    func homeManager(_ manager: HMHomeManager, didAdd home: HMHome) {
         
     }
     
-    func homeManager(manager: HMHomeManager, didRemoveHome home: HMHome) {
+    func homeManager(_ manager: HMHomeManager, didRemove home: HMHome) {
         
     }
     
-    func homeManagerDidUpdateHomes(manager: HMHomeManager) {
+    func homeManagerDidUpdateHomes(_ manager: HMHomeManager) {
         if let home = homeManager.primaryHome {
             activeHome = home
             updateControllerWithHome(home)
@@ -89,21 +95,21 @@ class XMCBaseViewController: UITableViewController, HMHomeManagerDelegate {
         tableView.reloadData()
     }
     
-    func homeManagerDidUpdatePrimaryHome(manager: HMHomeManager) {
+    func homeManagerDidUpdatePrimaryHome(_ manager: HMHomeManager) {
         
     }
     
     // MARK: - Setup
     
     // Create our primary home if it doens't exist yet
-    private func initialHomeSetup() {
-        homeManager.addHomeWithName("Porter Ave", completionHandler: { (home, error) in
+    fileprivate func initialHomeSetup() {
+        homeManager.addHome(withName: "Porter Ave", completionHandler: { (home, error) in
             if error != nil {
                 print("Something went wrong when attempting to create our home. \(error?.localizedDescription)")
             } else {
                 if let discoveredHome = home {
                     // Add a new room to our home
-                    discoveredHome.addRoomWithName("Office", completionHandler: { (room, error) in
+                    discoveredHome.addRoom(withName: "Office", completionHandler: { (room, error) in
                         if error != nil {
                             print("Something went wrong when attempting to create our room. \(error?.localizedDescription)")
                         } else {

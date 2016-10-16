@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>The HomeKit Accessory Simulator Window</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="HomeKit, HomeKit Accessory Simulator, Home Kit, Home Kit Accessory Simulator, interface, window, reachable" />
+        <meta name="description" content="Learn the layout of the HomeKit Accessory Simulator." />
+        <link href="style.css" rel="stylesheet" media="all" type="text/css" />
+    </head>
+
+    <body>
+        <table class="header-table">
+            <tr>
+                <td valign="middle">
+                    <a href="index.html">
+                        <img src="icon32x32.png" alt="Icon" />
+                    </a>
+                </td>
+
+                <td valign="middle">
+                    The HomeKit Accessory Simulator Window
+                </td>
+            </tr>
+        </table>
+        
+        <ul>
+            <li class="list-item">
+                The HomeKit Accessory Simulator window is divided into two sections.
+                <ul class="list-item">
+                    <li>
+                        The left side contains the accessory list. The list contains exactly one Bluetooth LE accessory which may not be removed. To this list, IP accessories (which includes regular accessories, bridges, and bridged accessories) may be added or removed.
+                    </li>
+                    <li>
+                        The right side of the window contains the main view and gives detailed information for the selected item.
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-item">
+                The accessory list displays the accessory name, and if the accessory is identifying itself. The BLE accessory, IP accessories, and IP bridges have an on/off state.
+
+                <ul class="list-item">
+                    <li>There is a hollow dot when the accessory is off.</li>
+                    <li>When the accessory is identifying, the blue dot will blink for as long as the accessory is identifying.</li>
+                </ul>
+            </li>
+
+            <li class="list-item">
+                The bottom of the accessory list contains a "+" button on the left and a "-" button on the right. The "+" creates accessories, bridges, and bridged accessories; and the "-" button deletes them.
+            </li>
+
+            <li class="list-item">
+                When selecting an accessory or bridge, the top area of the main view displays the Setup Code, Category, and the number of paired devices. This information does not exist for bridged accessories, as they are paired via their bridge.
+            </li>
+
+            <li class="list-item">
+                When selecting any item, the top area of the main view shows characteristics included in the accessory's Accessory Information Service. This top area's upper-right corner can be clicked to collapse or expand the area.     
+            </li>
+
+            <li class="list-item">
+                The bottom of the main view contains additional services for the accessory.
+            </li>
+        </ul>
+    </body>
+</html>

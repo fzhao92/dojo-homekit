@@ -1,0 +1,26 @@
+h1 {
+    font-size: 20pt;
+}
+
+a {
+  color: #3366CC;
+  text-decoration: none;
+}
+
+.list-item {
+    margin-top: 10px;
+}
+
+body {
+  color: #414141;
+  font-size: 11pt;
+  font-family: -apple-system-body, Helvetica, Arial, sans-serif;
+}
+
+.header-table {
+	color: #414141;
+  	font-size: 14pt;
+  	font-weight: bold;
+  	font-family: -apple-system-body, Helvetica, Arial, sans-serif;
+
+}
