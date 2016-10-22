@@ -19,7 +19,6 @@ class XMCBaseViewController: UITableViewController, HMHomeManagerDelegate {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         homeManager.delegate = self
     }
     
