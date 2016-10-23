@@ -8,6 +8,7 @@
 
 import UIKit
 import HomeKit
+import HandySwift
 
 class XMCLightbulbViewController: UIViewController, HMAccessoryDelegate {
 
@@ -44,7 +45,7 @@ class XMCLightbulbViewController: UIViewController, HMAccessoryDelegate {
         accessory?.delegate = self
         initCharacteristics()
         setUpSliders()
-        checkInitialLightState()
+        checkLightState()
     }
 }
 
@@ -53,6 +54,10 @@ extension XMCLightbulbViewController{
     func setUpSliders() {
         lightBrightnessSlider.maximumValue = 100.0
         lightBrightnessSlider.minimumValue = 0.0
+        lightHueSlider.maximumValue = 360.0
+        lightHueSlider.minimumValue = 0.0
+        lightSaturationSlider.maximumValue = 100.0
+        lightSaturationSlider.minimumValue = 0.0
     }
 
     @IBAction func moveBrightnessSlider(_ sender: UISlider) {
@@ -62,8 +67,32 @@ extension XMCLightbulbViewController{
                 print("Error during attempt to update service")
             }
             else {
-                print("Current brightness is \(self.brightness?.value as! Int)")
                 self.updateBrightness(value: brightnessValue)
+            }
+        })
+    }
+    
+    @IBAction func moveHueSlider(_ sender: UISlider) {
+        let hueValue = sender.value
+        hue?.writeValue(Int(hueValue), completionHandler: { (error) in
+            if error != nil {
+                print("Error during attempt to update service")
+            }
+            else {
+                self.updateHue(value: hueValue)
+            }
+        })
+    }
+    
+    @IBAction func moveSaturationSlider(_ sender: UISlider) {
+        let saturationValue = sender.value
+        //print("saturation value is \(saturationValue)")
+        saturation?.writeValue(Int(saturationValue), completionHandler: { (error) in
+            if error != nil {
+                print("Error during attempt to update service")
+            }
+            else {
+                self.updateSaturation(value: saturationValue)
             }
         })
     }
@@ -84,21 +113,6 @@ extension XMCLightbulbViewController{
         })
     }
     
-    func checkInitialLightState() {
-        guard let stateValue = state?.value else {
-            print("No current lightbulb state value available")
-            return
-        }
-        if stateValue as! Bool != true {
-            lightBulbColor.isHidden = true
-            lightSwitch.isOn = true
-        }
-        else{
-            lightBulbColor.isHidden = false
-            lightSwitch.isOn = false
-        }
-    }
-    
     func checkLightState() {
         guard let stateValue = state?.value else {
             print("No current lightbulb state value available")
@@ -115,8 +129,25 @@ extension XMCLightbulbViewController{
     }
     
     func updateBrightness(value: Float) {
-        print("max brightness value is \(maxBrightnessValue)")
         lightBulbColor.alpha = CGFloat(value / maxBrightnessValue)
+    }
+    
+    func updateHue(value: Float) {
+        var hue: CGFloat = 0.0
+        var saturation: CGFloat = 0.0
+        var brightness: CGFloat = 0.0
+        var alpha: CGFloat = 0.0
+        lightBulbColor.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        lightBulbColor.backgroundColor = UIColor(hue: CGFloat(value), saturation: saturation, brightness: brightness, alpha: alpha)
+    }
+    
+    func updateSaturation(value: Float) {
+        var hue: CGFloat = 0.0
+        var saturation: CGFloat = 0.0
+        var brightness: CGFloat = 0.0
+        var alpha: CGFloat = 0.0
+        lightBulbColor.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        lightBulbColor.backgroundColor = UIColor(hue: hue, saturation: CGFloat(value), brightness: brightness, alpha: alpha)
     }
     
     func initCharacteristics() {
@@ -140,6 +171,6 @@ extension XMCLightbulbViewController{
     }
     
     func accessoryDidUpdateServices(_ accessory: HMAccessory) {
-        <#code#>
+        
     }
 }

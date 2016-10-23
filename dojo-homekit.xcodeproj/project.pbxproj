@@ -16,10 +16,13 @@
 		F019C86B1A8C2C2900E2BC5E /* XMCDiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F019C86A1A8C2C2900E2BC5E /* XMCDiscoveryViewController.swift */; };
 		F0261E691A8C4776004DD33A /* XMCAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0261E681A8C4776004DD33A /* XMCAccessoryViewController.swift */; };
 		F0261E6B1A8C74B5004DD33A /* LaunchScreen_rank_3.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0261E6A1A8C74B5004DD33A /* LaunchScreen_rank_3.xib */; };
+		F1A2770A32FCDD4DC892664C /* Pods_dojo_homekit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3DC08E942D17EB9AAB96F4 /* Pods_dojo_homekit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D3DC08E942D17EB9AAB96F4 /* Pods_dojo_homekit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dojo_homekit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F71DFC11DB3F211007B3583 /* XMCLightbulbViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMCLightbulbViewController.swift; sourceTree = "<group>"; };
+		91FB3B0C0685A3054BED5CF0 /* Pods-dojo-homekit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dojo-homekit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-dojo-homekit/Pods-dojo-homekit.debug.xcconfig"; sourceTree = "<group>"; };
 		F019C8421A8C24E700E2BC5E /* dojo-homekit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "dojo-homekit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F019C8461A8C24E700E2BC5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F019C8471A8C24E700E2BC5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -31,6 +34,7 @@
 		F019C86A1A8C2C2900E2BC5E /* XMCDiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMCDiscoveryViewController.swift; sourceTree = "<group>"; };
 		F0261E681A8C4776004DD33A /* XMCAccessoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMCAccessoryViewController.swift; sourceTree = "<group>"; };
 		F0261E6A1A8C74B5004DD33A /* LaunchScreen_rank_3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen_rank_3.xib; sourceTree = "<group>"; };
+		F9B879D75A6468B96D6930CC /* Pods-dojo-homekit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dojo-homekit.release.xcconfig"; path = "Pods/Target Support Files/Pods-dojo-homekit/Pods-dojo-homekit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,17 +43,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				F019C8681A8C251000E2BC5E /* HomeKit.framework in Frameworks */,
+				F1A2770A32FCDD4DC892664C /* Pods_dojo_homekit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3AD8957A83BEA14006C78E54 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				91FB3B0C0685A3054BED5CF0 /* Pods-dojo-homekit.debug.xcconfig */,
+				F9B879D75A6468B96D6930CC /* Pods-dojo-homekit.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B12D0D4BE0A45F0494C4B3F9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1D3DC08E942D17EB9AAB96F4 /* Pods_dojo_homekit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F019C8391A8C24E700E2BC5E = {
 			isa = PBXGroup;
 			children = (
 				F019C8441A8C24E700E2BC5E /* dojo-homekit */,
 				F019C8431A8C24E700E2BC5E /* Products */,
+				3AD8957A83BEA14006C78E54 /* Pods */,
+				B12D0D4BE0A45F0494C4B3F9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -94,9 +118,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F019C8611A8C24E700E2BC5E /* Build configuration list for PBXNativeTarget "dojo-homekit" */;
 			buildPhases = (
+				E405E0F2F6B52E8C2F87DD1B /* [CP] Check Pods Manifest.lock */,
 				F019C83E1A8C24E700E2BC5E /* Sources */,
 				F019C83F1A8C24E700E2BC5E /* Frameworks */,
 				F019C8401A8C24E700E2BC5E /* Resources */,
+				F9E2D3C7D262EF0FA5B94A34 /* [CP] Embed Pods Frameworks */,
+				A369E6721A2F3BA23169FDC6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -160,6 +187,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A369E6721A2F3BA23169FDC6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-dojo-homekit/Pods-dojo-homekit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E405E0F2F6B52E8C2F87DD1B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F9E2D3C7D262EF0FA5B94A34 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-dojo-homekit/Pods-dojo-homekit-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F019C83E1A8C24E700E2BC5E /* Sources */ = {
@@ -275,6 +350,7 @@
 		};
 		F019C8621A8C24E700E2BC5E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91FB3B0C0685A3054BED5CF0 /* Pods-dojo-homekit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "dojo-homekit/dojo-homekit.entitlements";
@@ -291,6 +367,7 @@
 		};
 		F019C8631A8C24E700E2BC5E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F9B879D75A6468B96D6930CC /* Pods-dojo-homekit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "dojo-homekit/dojo-homekit.entitlements";
