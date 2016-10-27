@@ -89,14 +89,23 @@ extension XMCLightbulbViewController{
                 print("Error during attempt to update service")
             }
             else {
+                /*
+                self.hue?.readValue(completionHandler: { (error) in
+                    if error != nil {
+                        print("error reading hue value")
+                    }
+                    else {
+                        let newHueVal = self.hue?.value as! Float
+                        self.updateHue(value: newHueVal)
+                    }
+                })*/
                 self.updateHue(value: hueValue)
             }
         })
     }
-    
+ 
     @IBAction func moveSaturationSlider(_ sender: UISlider) {
         let saturationValue = sender.value
-        //print("saturation value is \(saturationValue)")
         saturation?.writeValue(Int(saturationValue), completionHandler: { (error) in
             if error != nil {
                 print("Error during attempt to update service")
@@ -118,10 +127,18 @@ extension XMCLightbulbViewController{
                 print("Error during attempt to update service")
             }
             else {
-                self.checkLightState()
+                self.state?.readValue(completionHandler: { (error) in
+                    if error != nil {
+                        print("error reading value")
+                    }
+                    else {
+                        self.checkLightState(value: self.state?.value as! Bool)
+                    }
+                })
             }
         })
     }
+    
     
     func checkLightState() {
         guard let stateValue = state?.value else {
@@ -138,17 +155,30 @@ extension XMCLightbulbViewController{
         }
     }
     
+    func checkLightState(value: Bool) {
+        if value != true {
+            lightBulb.isHidden = true
+            lightSwitch.isOn = false
+        }
+        else{
+            lightBulb.isHidden = false
+            lightSwitch.isOn = true
+        }
+    }
+    
     func updateBrightness(value: Float) {
         lightBulb.alpha = CGFloat(value / maxBrightnessValue)
     }
     
     func updateHue(value: Float) {
+        print("updated hue value = \(value)")
         var hue: CGFloat = 0.0
         var saturation: CGFloat = 0.0
         var brightness: CGFloat = 0.0
         var alpha: CGFloat = 0.0
         lightBulb.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
         lightBulb.backgroundColor = UIColor(hue: CGFloat(value), saturation: saturation, brightness: brightness, alpha: alpha)
+        self.lightHueSlider.value = value
     }
     
     func updateSaturation(value: Float) {
@@ -179,29 +209,43 @@ extension XMCLightbulbViewController{
             }
         }
     }
-    
-    func accessoryDidUpdateServices(_ accessory: HMAccessory) {
-        
-    }
 }
 
 extension XMCLightbulbViewController {
     
     @objc(accessory:service:didUpdateValueForCharacteristic:) func accessory(_ accessory: HMAccessory, service: HMService, didUpdateValueFor characteristic: HMCharacteristic) {
-        print("delegate triggered")
         for item in service.characteristics {
             let characteristic = item as HMCharacteristic
             if let metadata = characteristic.metadata! as HMCharacteristicMetadata? {
                 switch metadata.manufacturerDescription! {
                 case "Power State":
-                    print("in power state switch statement")
                     characteristic.readValue(completionHandler: { (error) in
                         if error != nil {
-                            print("Error reading value " + (error?.localizedDescription)!)
+                            print("Error reading power state value " + (error?.localizedDescription)!)
                         }
                         else {
-                            let value = characteristic.value
-                            print(value)
+                            let value = characteristic.value as! Bool
+                            self.checkLightState(value: value)
+                        }
+                    })
+                case "Hue":
+                    characteristic.readValue(completionHandler: { (error) in
+                        if error != nil {
+                            print("Error reading hue value " + (error?.localizedDescription)!)
+                        }
+                        else {
+                            let value = characteristic.value as! Float
+                            self.updateHue(value: value)
+                        }
+                    })
+                case "Brightness":
+                    characteristic.readValue(completionHandler: { (error) in
+                        if error != nil {
+                            print("Error reading hue value " + (error?.localizedDescription)!)
+                        }
+                        else {
+                            let value = characteristic.value as! Float
+                            self.updateBrightness(value: value)
                         }
                     })
                 default:
@@ -210,26 +254,4 @@ extension XMCLightbulbViewController {
             }
         }
     }
-    /*
-    @objc(accessory:didUpdateAssociatedServiceTypeForService:) func accessory(_ accessory: HMAccessory, didUpdateAssociatedServiceTypeFor service: HMService) {
-        if service.serviceType == HMServiceTypeLightbulb {
-            print("In light bulb delegate")
-            for item in service.characteristics {
-                let characteristic = item as HMCharacteristic
-                if let metadata = characteristic.metadata! as HMCharacteristicMetadata? {
-                    switch metadata.manufacturerDescription! {
-                    case "Power State":
-                        characteristic.readValue(completionHandler: { (error) in
-                            if error != nil {
-                                print("Error reading value " + (error?.localizedDescription)!)
-                            }
-                        })
-                        checkLightState()
-                    default:
-                        break
-                    }
-                }
-            }
-        }
-    }*/
 }
