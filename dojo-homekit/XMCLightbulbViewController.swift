@@ -52,7 +52,7 @@ class XMCLightbulbViewController: UIViewController, HMAccessoryDelegate {
         for item in (lightBulbService?.characteristics)! {
             item.enableNotification(true, completionHandler: { (error) in
                 if error != nil {
-                    print("error enabling notificaiton")
+                    print("error enabling  \(item.metadata?.manufacturerDescription) notificaiton")
                 }
             })
         }
@@ -60,6 +60,8 @@ class XMCLightbulbViewController: UIViewController, HMAccessoryDelegate {
 }
 
 extension XMCLightbulbViewController{
+    
+    // MARK: - Initial setup
     
     func setUpSliders() {
         lightBrightnessSlider.maximumValue = 100.0
@@ -72,12 +74,34 @@ extension XMCLightbulbViewController{
         hueValueLabel.text = String(Int(lightHueSlider.value))
         saturationValueLabel.text = String(Int(lightSaturationSlider.value))
     }
+    
+    func initCharacteristics() {
+        for item in (lightBulbService?.characteristics)! {
+            let characteristic = item as HMCharacteristic
+            if let metadata = characteristic.metadata as HMCharacteristicMetadata?{
+                switch metadata.manufacturerDescription! {
+                case "Power State":
+                    state = characteristic
+                case "Hue":
+                    hue = characteristic
+                case "Saturation":
+                    saturation = characteristic
+                case "Brightness":
+                    brightness = characteristic
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    // MARK: - switch and sliders funcs
 
     @IBAction func moveBrightnessSlider(_ sender: UISlider) {
         let brightnessValue = sender.value
         brightness?.writeValue(Int(brightnessValue), completionHandler: { (error) in
             if error != nil {
-                print("Error during attempt to update service")
+                print("Error during attempt to update brightness service")
             }
             else {
                 self.updateBrightness(value: brightnessValue)
@@ -89,7 +113,7 @@ extension XMCLightbulbViewController{
         let hueValue = sender.value
         hue?.writeValue(Int(hueValue), completionHandler: { (error) in
             if error != nil {
-                print("Error during attempt to update service")
+                print("Error during attempt to update hue service")
             }
             else {
                 /*
@@ -111,10 +135,10 @@ extension XMCLightbulbViewController{
         let saturationValue = sender.value
         saturation?.writeValue(Int(saturationValue), completionHandler: { (error) in
             if error != nil {
-                print("Error during attempt to update service")
+                print("Error during attempt to update saturation service")
             }
             else {
-                self.updateSaturation(value: saturationValue)
+                //self.updateSaturation(value: saturationValue)
             }
         })
     }
@@ -127,7 +151,7 @@ extension XMCLightbulbViewController{
         let toggleState = (stateValue as! Bool) ? false : true
         state?.writeValue(NSNumber(value: toggleState ), completionHandler: { (error) -> Void in
             if error != nil {
-                print("Error during attempt to update service")
+                print("Error during attempt to update state service")
             }
             else {
                 self.state?.readValue(completionHandler: { (error) in
@@ -142,6 +166,7 @@ extension XMCLightbulbViewController{
         })
     }
     
+    // MARK: - update lightbulb state properties
     
     func checkLightState() {
         guard let stateValue = state?.value else {
@@ -176,46 +201,31 @@ extension XMCLightbulbViewController{
     }
     
     func updateHue(value: Float) {
-        print("updated hue value = \(value)")
         hueValueLabel.text = String(Int(value))
         var hue: CGFloat = 0.0
         var saturation: CGFloat = 0.0
         var brightness: CGFloat = 0.0
         var alpha: CGFloat = 0.0
         lightBulb.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        lightBulb.backgroundColor = UIColor(hue: CGFloat(value), saturation: saturation, brightness: brightness, alpha: alpha)
+        lightBulb.backgroundColor = UIColor(hue: CGFloat(value / lightHueSlider.maximumValue), saturation: saturation, brightness: brightness, alpha: alpha)
         self.lightHueSlider.value = value
     }
     
     func updateSaturation(value: Float) {
+        print("in updating saturation")
+        lightSaturationSlider.value = value
+        saturationValueLabel.text = String(Int(value))
         var hue: CGFloat = 0.0
         var saturation: CGFloat = 0.0
         var brightness: CGFloat = 0.0
         var alpha: CGFloat = 0.0
         lightBulb.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        lightBulb.backgroundColor = UIColor(hue: hue, saturation: CGFloat(value), brightness: brightness, alpha: alpha)
+        lightBulb.backgroundColor = UIColor(hue: hue, saturation: CGFloat(value / lightSaturationSlider.maximumValue), brightness: brightness, alpha: alpha)
     }
     
-    func initCharacteristics() {
-        for item in (lightBulbService?.characteristics)! {
-            let characteristic = item as HMCharacteristic
-            if let metadata = characteristic.metadata as HMCharacteristicMetadata?{
-                switch metadata.manufacturerDescription! {
-                case "Power State":
-                    state = characteristic
-                case "Hue":
-                    hue = characteristic
-                case "Saturation":
-                    saturation = characteristic
-                case "Brightness":
-                    brightness = characteristic
-                default:
-                    break
-                }
-            }
-        }
-    }
 }
+
+// MARK: - HMAccessory Delegate methods
 
 extension XMCLightbulbViewController {
     
@@ -252,6 +262,16 @@ extension XMCLightbulbViewController {
                         else {
                             let value = characteristic.value as! Float
                             self.updateBrightness(value: value)
+                        }
+                    })
+                case "Saturation":
+                    characteristic.readValue(completionHandler: { (error) in
+                        if error != nil {
+                            print("Error reading hue value " + (error?.localizedDescription)!)
+                        }
+                        else {
+                            let value = characteristic.value as! Float
+                            self.updateSaturation(value: value)
                         }
                     })
                 default:
