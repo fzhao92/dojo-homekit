@@ -30,10 +30,6 @@ class XMCLightbulbViewController: UIViewController, HMAccessoryDelegate {
     var hue: HMCharacteristic?
     var brightness: HMCharacteristic?
     var saturation: HMCharacteristic?
-    
-    var maxBrightnessValue: Float = 100.0
-    var minBrightnessValue: Float = 0.0
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -203,7 +199,7 @@ extension XMCLightbulbViewController{
     func updateBrightness(value: Float) {
         lightBrightnessSlider.value = value
         brightnessValueLabel.text = String(Int(value))
-        lightBulb.alpha = CGFloat(value / maxBrightnessValue)
+        lightBulb.alpha = CGFloat(value / lightBrightnessSlider.maximumValue)
     }
     
     func updateHue(value: Float) {
