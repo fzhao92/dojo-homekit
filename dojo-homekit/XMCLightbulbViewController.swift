@@ -116,7 +116,6 @@ extension XMCLightbulbViewController{
                 print("Error during attempt to update hue service")
             }
             else {
-                /*
                 self.hue?.readValue(completionHandler: { (error) in
                     if error != nil {
                         print("error reading hue value")
@@ -125,8 +124,7 @@ extension XMCLightbulbViewController{
                         let newHueVal = self.hue?.value as! Float
                         self.updateHue(value: newHueVal)
                     }
-                })*/
-                //self.updateHue(value: hueValue)
+                })
             }
         })
     }
@@ -138,7 +136,15 @@ extension XMCLightbulbViewController{
                 print("Error during attempt to update saturation service")
             }
             else {
-                //self.updateSaturation(value: saturationValue)
+                self.saturation?.readValue(completionHandler: { (error) in
+                    if error != nil {
+                        print("error reading saturation value")
+                    }
+                    else {
+                        let newSaturationVal = self.saturation?.value as! Float
+                        self.updateSaturation(value: newSaturationVal)
+                    }
+                })
             }
         })
     }
