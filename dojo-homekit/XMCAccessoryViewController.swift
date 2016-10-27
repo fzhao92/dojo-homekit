@@ -22,7 +22,6 @@ class XMCAccessoryViewController: UITableViewController, HMAccessoryDelegate {
                 data.append(service as HMService)
             }
         }
-        
         accessory?.delegate = self
     }
     

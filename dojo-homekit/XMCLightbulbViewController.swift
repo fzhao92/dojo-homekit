@@ -12,7 +12,7 @@ import HandySwift
 
 class XMCLightbulbViewController: UIViewController, HMAccessoryDelegate {
 
-    @IBOutlet weak var lightBulbColor: UIView!
+    @IBOutlet weak var lightBulb: UIView!
     @IBOutlet weak var lightSwitch: UISwitch!
     @IBOutlet weak var lightBrightnessSlider: UISlider!
     @IBOutlet weak var lightHueSlider: UISlider!
@@ -46,6 +46,16 @@ class XMCLightbulbViewController: UIViewController, HMAccessoryDelegate {
         initCharacteristics()
         setUpSliders()
         checkLightState()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        for item in (lightBulbService?.characteristics)! {
+            item.enableNotification(true, completionHandler: { (error) in
+                if error != nil {
+                    print("error enabling notificaiton")
+                }
+            })
+        }
     }
 }
 
@@ -119,17 +129,17 @@ extension XMCLightbulbViewController{
             return
         }
         if stateValue as! Bool != true {
-            lightBulbColor.isHidden = true
+            lightBulb.isHidden = true
             lightSwitch.isOn = false
         }
         else{
-            lightBulbColor.isHidden = false
+            lightBulb.isHidden = false
             lightSwitch.isOn = true
         }
     }
     
     func updateBrightness(value: Float) {
-        lightBulbColor.alpha = CGFloat(value / maxBrightnessValue)
+        lightBulb.alpha = CGFloat(value / maxBrightnessValue)
     }
     
     func updateHue(value: Float) {
@@ -137,8 +147,8 @@ extension XMCLightbulbViewController{
         var saturation: CGFloat = 0.0
         var brightness: CGFloat = 0.0
         var alpha: CGFloat = 0.0
-        lightBulbColor.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        lightBulbColor.backgroundColor = UIColor(hue: CGFloat(value), saturation: saturation, brightness: brightness, alpha: alpha)
+        lightBulb.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        lightBulb.backgroundColor = UIColor(hue: CGFloat(value), saturation: saturation, brightness: brightness, alpha: alpha)
     }
     
     func updateSaturation(value: Float) {
@@ -146,8 +156,8 @@ extension XMCLightbulbViewController{
         var saturation: CGFloat = 0.0
         var brightness: CGFloat = 0.0
         var alpha: CGFloat = 0.0
-        lightBulbColor.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        lightBulbColor.backgroundColor = UIColor(hue: hue, saturation: CGFloat(value), brightness: brightness, alpha: alpha)
+        lightBulb.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        lightBulb.backgroundColor = UIColor(hue: hue, saturation: CGFloat(value), brightness: brightness, alpha: alpha)
     }
     
     func initCharacteristics() {
@@ -173,4 +183,53 @@ extension XMCLightbulbViewController{
     func accessoryDidUpdateServices(_ accessory: HMAccessory) {
         
     }
+}
+
+extension XMCLightbulbViewController {
+    
+    @objc(accessory:service:didUpdateValueForCharacteristic:) func accessory(_ accessory: HMAccessory, service: HMService, didUpdateValueFor characteristic: HMCharacteristic) {
+        print("delegate triggered")
+        for item in service.characteristics {
+            let characteristic = item as HMCharacteristic
+            if let metadata = characteristic.metadata! as HMCharacteristicMetadata? {
+                switch metadata.manufacturerDescription! {
+                case "Power State":
+                    print("in power state switch statement")
+                    characteristic.readValue(completionHandler: { (error) in
+                        if error != nil {
+                            print("Error reading value " + (error?.localizedDescription)!)
+                        }
+                        else {
+                            let value = characteristic.value
+                            print(value)
+                        }
+                    })
+                default:
+                    break
+                }
+            }
+        }
+    }
+    /*
+    @objc(accessory:didUpdateAssociatedServiceTypeForService:) func accessory(_ accessory: HMAccessory, didUpdateAssociatedServiceTypeFor service: HMService) {
+        if service.serviceType == HMServiceTypeLightbulb {
+            print("In light bulb delegate")
+            for item in service.characteristics {
+                let characteristic = item as HMCharacteristic
+                if let metadata = characteristic.metadata! as HMCharacteristicMetadata? {
+                    switch metadata.manufacturerDescription! {
+                    case "Power State":
+                        characteristic.readValue(completionHandler: { (error) in
+                            if error != nil {
+                                print("Error reading value " + (error?.localizedDescription)!)
+                            }
+                        })
+                        checkLightState()
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+    }*/
 }
