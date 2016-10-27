@@ -68,6 +68,9 @@ extension XMCLightbulbViewController{
         lightHueSlider.minimumValue = 0.0
         lightSaturationSlider.maximumValue = 100.0
         lightSaturationSlider.minimumValue = 0.0
+        brightnessValueLabel.text = String(Int(lightBrightnessSlider.value))
+        hueValueLabel.text = String(Int(lightHueSlider.value))
+        saturationValueLabel.text = String(Int(lightSaturationSlider.value))
     }
 
     @IBAction func moveBrightnessSlider(_ sender: UISlider) {
@@ -99,7 +102,7 @@ extension XMCLightbulbViewController{
                         self.updateHue(value: newHueVal)
                     }
                 })*/
-                self.updateHue(value: hueValue)
+                //self.updateHue(value: hueValue)
             }
         })
     }
@@ -167,11 +170,14 @@ extension XMCLightbulbViewController{
     }
     
     func updateBrightness(value: Float) {
+        lightBrightnessSlider.value = value
+        brightnessValueLabel.text = String(Int(value))
         lightBulb.alpha = CGFloat(value / maxBrightnessValue)
     }
     
     func updateHue(value: Float) {
         print("updated hue value = \(value)")
+        hueValueLabel.text = String(Int(value))
         var hue: CGFloat = 0.0
         var saturation: CGFloat = 0.0
         var brightness: CGFloat = 0.0
