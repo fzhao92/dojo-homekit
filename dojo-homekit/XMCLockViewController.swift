@@ -81,7 +81,6 @@ class XMCLockViewController: UIViewController, HMAccessoryDelegate {
                 }
             }
         }
-        
     }
     
     func animatelock() {
