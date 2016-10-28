@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F71DFC21DB3F211007B3583 /* XMCLightbulbViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F71DFC11DB3F211007B3583 /* XMCLightbulbViewController.swift */; };
+		3FB24F071DC2CC0600279B72 /* XMCLockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB24F061DC2CC0600279B72 /* XMCLockViewController.swift */; };
 		F019C8481A8C24E700E2BC5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F019C8471A8C24E700E2BC5E /* AppDelegate.swift */; };
 		F019C84A1A8C24E700E2BC5E /* XMCBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F019C8491A8C24E700E2BC5E /* XMCBaseViewController.swift */; };
 		F019C84D1A8C24E700E2BC5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F019C84B1A8C24E700E2BC5E /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		1D3DC08E942D17EB9AAB96F4 /* Pods_dojo_homekit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dojo_homekit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F71DFC11DB3F211007B3583 /* XMCLightbulbViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMCLightbulbViewController.swift; sourceTree = "<group>"; };
+		3FB24F061DC2CC0600279B72 /* XMCLockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMCLockViewController.swift; sourceTree = "<group>"; };
 		91FB3B0C0685A3054BED5CF0 /* Pods-dojo-homekit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dojo-homekit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-dojo-homekit/Pods-dojo-homekit.debug.xcconfig"; sourceTree = "<group>"; };
 		F019C8421A8C24E700E2BC5E /* dojo-homekit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "dojo-homekit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F019C8461A8C24E700E2BC5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				F019C84E1A8C24E700E2BC5E /* Images.xcassets */,
 				F0261E6A1A8C74B5004DD33A /* LaunchScreen_rank_3.xib */,
 				F019C8451A8C24E700E2BC5E /* Supporting Files */,
+				3FB24F061DC2CC0600279B72 /* XMCLockViewController.swift */,
 			);
 			path = "dojo-homekit";
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FB24F071DC2CC0600279B72 /* XMCLockViewController.swift in Sources */,
 				F0261E691A8C4776004DD33A /* XMCAccessoryViewController.swift in Sources */,
 				F019C84A1A8C24E700E2BC5E /* XMCBaseViewController.swift in Sources */,
 				F019C8481A8C24E700E2BC5E /* AppDelegate.swift in Sources */,

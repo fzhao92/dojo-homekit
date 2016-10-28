@@ -35,17 +35,25 @@ class XMCBaseViewController: UITableViewController, HMHomeManagerDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let indexPath = tableView.indexPathForSelectedRow!
+
         if segue.identifier == "showServicesSegue" {
             let vc = segue.destination as! XMCAccessoryViewController
             if let accessories = activeRoom?.accessories {
                 vc.accessory = accessories[lastSelectedIndexRow] as HMAccessory?
             }
         }
+        
         else if segue.identifier == "showLightbulb" {
             let dest = segue.destination as! XMCLightbulbViewController
             if let accessories = activeRoom?.accessories {
-                dest.accessory = accessories[lastSelectedIndexRow] as HMAccessory?
+                dest.accessory = accessories[indexPath.row] as HMAccessory?
             }
+        }
+        else if segue.identifier == "showLockDetail" {
+            let destination = segue.destination as! XMCLockViewController
+            destination.accessory = activeRoom!.accessories[indexPath.row] as HMAccessory
+            
         }
     }
     
