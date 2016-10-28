@@ -42,7 +42,7 @@ class XMCDiscoveryViewController: UITableViewController, HMAccessoryBrowserDeleg
         return accessories.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "accessoryId") {
             let accessory = accessories[indexPath.row] as HMAccessory
             cell.textLabel?.text = accessory.name
@@ -51,9 +51,9 @@ class XMCDiscoveryViewController: UITableViewController, HMAccessoryBrowserDeleg
         return UITableViewCell()
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let accessory = accessories[indexPath.row] as HMAccessory
-
+        
         if let room = homeManager.primaryHome?.rooms.first as HMRoom? {
             homeManager.primaryHome?.addAccessory(accessory, completionHandler: { (error) -> Void in
                 if error != nil {
@@ -71,18 +71,21 @@ class XMCDiscoveryViewController: UITableViewController, HMAccessoryBrowserDeleg
         }
     }
     
-    
     // MARK: - Accessory Delegate
     
     // Informs us when we've located a new accessory in the home
-    func accessoryBrowser(browser: HMAccessoryBrowser, didFindNewAccessory accessory: HMAccessory) {
+    
+    
+    func accessoryBrowser(_ browser: HMAccessoryBrowser, didFindNewAccessory accessory: HMAccessory) {
+        print("in did find accesory delegate method")
         accessories.append(accessory)
         tableView.reloadData()
     }
     
+    
     // Inform us when a device has been removed... so something that was previously 
     // reachable, but is no longer.
-    func accessoryBrowser(browser: HMAccessoryBrowser, didRemoveNewAccessory accessory: HMAccessory) {
+    func accessoryBrowser(_ browser: HMAccessoryBrowser, didRemoveNewAccessory accessory: HMAccessory) {
         var index = 0
         for item in accessories {
             if item.name == accessory.name {

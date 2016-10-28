@@ -214,7 +214,6 @@ extension XMCLightbulbViewController{
     }
     
     func updateSaturation(value: Float) {
-        print("in updating saturation")
         lightSaturationSlider.value = value
         saturationValueLabel.text = String(Int(value))
         var hue: CGFloat = 0.0

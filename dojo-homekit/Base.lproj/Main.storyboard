@@ -187,6 +187,11 @@
                             <constraint firstItem="blq-T7-vBX" firstAttribute="width" secondItem="w5t-sO-5Yd" secondAttribute="width" multiplier="0.6" id="qVQ-x3-yR7"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="lockTargetStateSwitch" destination="t4e-Ko-DXi" id="FIQ-T6-obx"/>
+                        <outlet property="lockedImage" destination="3wO-Pz-x2e" id="Aes-qh-xVe"/>
+                        <outlet property="unlockedImage" destination="blq-T7-vBX" id="YAX-27-Mki"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hqv-Dk-o6n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -224,9 +229,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="faR-GF-XMG" kind="show" id="eqB-be-bgp"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -241,6 +243,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="wTR-Nv-NL9" kind="show" identifier="showLightbulb" id="TwJ-6S-qGQ"/>
+                        <segue destination="faR-GF-XMG" kind="show" identifier="showLockDetail" id="W7Z-s9-yAe"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vdb-rb-4VC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

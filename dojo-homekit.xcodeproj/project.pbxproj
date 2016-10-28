@@ -96,11 +96,11 @@
 				F019C86A1A8C2C2900E2BC5E /* XMCDiscoveryViewController.swift */,
 				F0261E681A8C4776004DD33A /* XMCAccessoryViewController.swift */,
 				3F71DFC11DB3F211007B3583 /* XMCLightbulbViewController.swift */,
+				3FB24F061DC2CC0600279B72 /* XMCLockViewController.swift */,
 				F019C84B1A8C24E700E2BC5E /* Main.storyboard */,
 				F019C84E1A8C24E700E2BC5E /* Images.xcassets */,
 				F0261E6A1A8C74B5004DD33A /* LaunchScreen_rank_3.xib */,
 				F019C8451A8C24E700E2BC5E /* Supporting Files */,
-				3FB24F061DC2CC0600279B72 /* XMCLockViewController.swift */,
 			);
 			path = "dojo-homekit";
 			sourceTree = "<group>";

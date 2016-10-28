@@ -35,25 +35,25 @@ class XMCBaseViewController: UITableViewController, HMHomeManagerDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let indexPath = tableView.indexPathForSelectedRow!
+        if let indexPath = tableView.indexPathForSelectedRow {
+            if segue.identifier == "showLightbulb" {
+                let dest = segue.destination as! XMCLightbulbViewController
+                if let accessories = activeRoom?.accessories {
+                    dest.accessory = accessories[indexPath.row] as HMAccessory?
+                }
+            }
+            else if segue.identifier == "showLockDetail" {
+                let destination = segue.destination as! XMCLockViewController
+                destination.accessory = activeRoom!.accessories[indexPath.row] as HMAccessory
+                
+            }
+        }
 
         if segue.identifier == "showServicesSegue" {
             let vc = segue.destination as! XMCAccessoryViewController
             if let accessories = activeRoom?.accessories {
                 vc.accessory = accessories[lastSelectedIndexRow] as HMAccessory?
             }
-        }
-        
-        else if segue.identifier == "showLightbulb" {
-            let dest = segue.destination as! XMCLightbulbViewController
-            if let accessories = activeRoom?.accessories {
-                dest.accessory = accessories[indexPath.row] as HMAccessory?
-            }
-        }
-        else if segue.identifier == "showLockDetail" {
-            let destination = segue.destination as! XMCLockViewController
-            destination.accessory = activeRoom!.accessories[indexPath.row] as HMAccessory
-            
         }
     }
     
@@ -78,7 +78,18 @@ class XMCBaseViewController: UITableViewController, HMHomeManagerDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        lastSelectedIndexRow = (indexPath as NSIndexPath).row
+        //lastSelectedIndexRow = (indexPath as NSIndexPath).row
+        let selectedAccessory = (activeHome?.accessories[indexPath.row])! as HMAccessory
+        if #available(iOS 9.0, *) {
+            if selectedAccessory.name.lowercased().contains("light") {
+                performSegue(withIdentifier: "showLightbulb", sender: nil)
+            }
+            if selectedAccessory.name.lowercased().contains("lock") {
+                performSegue(withIdentifier: "showLockDetail", sender: nil)
+            }
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     // MARK: - Home Delegate

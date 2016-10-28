@@ -7,29 +7,99 @@
 //
 
 import UIKit
+import HomeKit
 
-class XMCLockViewController: UIViewController {
-
+class XMCLockViewController: UIViewController, HMAccessoryDelegate {
+    
+    @IBOutlet weak var lockCurrentStateSwitch: UISwitch!
+    @IBOutlet weak var lockTargetStateSwitch: UISwitch!
+    @IBOutlet weak var unlockedImage: UIImageView!
+    @IBOutlet weak var lockedImage: UIImageView!
+    
+    var lockImage: UIImageView!
+    var lockCurrentStateValue: HMCharacteristicValueLockMechanismState?
+    //  var lockTargetStateValue:  // --- Find type for this
+    var accessory: HMAccessory?
+    var lockService: HMService?
+    var lockTargetState: HMCharacteristic?
+    var lockCurrentState: HMCharacteristic?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        unlockedImage.isHidden = true
+        
+        for service in accessory!.services {
+            if service.serviceType == HMServiceTypeLockMechanism {
+                lockService = service
+            }
+        }
+        currentLockStatus()
+        accessory?.delegate = self
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func changeLockCurrentState(_ sender: UISwitch) {
+        if sender.isOn {
+            lockTargetState?.writeValue(1, completionHandler: { (error) in
+                if error != nil {
+                    print("Error during attempt to update service")
+                }
+                else {
+                    self.animatelock()
+                    
+                }
+            })
+        }
+        else {
+            lockTargetState?.writeValue(0, completionHandler: { (error) in
+                if error != nil{
+                    print("Error during attempt to update service")
+                } else {
+                    self.animateUnlock()
+                }
+            })
+        }
     }
-    */
-
+    
+    
+    func currentLockStatus() {
+        for item in (lockService?.characteristics)!{
+            let characteristic = item as HMCharacteristic
+            if let metadata = characteristic.metadata as HMCharacteristicMetadata? {
+                if metadata.manufacturerDescription == "Lock Target State" {
+                    lockTargetState = characteristic
+                }
+            }
+            if let metadata = characteristic.metadata as HMCharacteristicMetadata? {
+                if metadata.manufacturerDescription == "Lock Current State" {
+                    lockCurrentState = characteristic
+                }
+            }
+        }
+        
+    }
+    
+    func animatelock() {
+        
+        UIView.animate(withDuration: 10, delay: 0, options: .curveEaseInOut, animations: {
+            self.unlockedImage.isHidden = true
+            self.lockedImage.isHidden = false
+            }, completion: nil)
+        
+    }
+    
+    func animateUnlock() {
+        
+        UIView.animate(withDuration: 10, delay: 0, options: .curveEaseInOut, animations: {
+            self.unlockedImage.isHidden = false
+            self.lockedImage.isHidden = true
+            }, completion: nil)
+        
+    }
+    
 }
