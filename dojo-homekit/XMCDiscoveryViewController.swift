@@ -28,7 +28,7 @@ class XMCDiscoveryViewController: UITableViewController, HMAccessoryBrowserDeleg
     
         // Searching for accessories is an expensive operation. Stop the process within
         // a reasonable time to avoid unnessarily using battery & other resources
-        Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: "stopSearching", userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(stopSearching), userInfo: nil, repeats: false)
     }
     
     func stopSearching() {
